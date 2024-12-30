@@ -1,0 +1,21 @@
+services:
+  web:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./lb.conf:/etc/nginx/nginx.conf
+    networks:
+      - mynet
+    depends_on:
+      - backend_app_0
+  backend_app_0:
+    image: fastapi-app
+    ports:
+      - "8000:8000"
+    networks:
+      - mynet
+
+networks:
+  mynet:
+    driver: bridge
